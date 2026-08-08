@@ -16,12 +16,6 @@ public class ListSet extends Screen {
         super.init();
 
         groupListWidget = new GroupListWidget(0,100,this.width,this.height);
-        groupListWidget.addEntry("第一条测试");
-        groupListWidget.addEntry("第二条测试");
-        groupListWidget.addEntry("第三条测试");
-        groupListWidget.addEntry("第四条测试");
-        groupListWidget.addEntry("第五条测试");
-        groupListWidget.addEntry("第六条测试");
         this.addRenderableWidget(groupListWidget);
 
     }

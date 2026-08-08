@@ -55,6 +55,8 @@ public class GroupManager {
         }
         return false;
     }
+    //查询
+
     public Group getPlayerGroup(String playerName) {
         String groupId = playerGroupMap.get(playerName);
         if (groupId == null) return null;
@@ -68,7 +70,21 @@ public class GroupManager {
     public int getGroupCount() {
         return groups.size();
     }
-    public Group getGroup(UUID groupId) {
+
+    public Group getGroup(String groupId) {
         return groups.get(groupId);
+    }
+
+    public List<Group> getAllGroups() {
+        return new ArrayList<>(groups.values());
+    }
+
+    public boolean isGroupIdUsed(String groupId) {
+        return groups.containsKey(groupId);
+    }
+
+    public void clearAll() {
+        groups.clear();
+        playerGroupMap.clear();
     }
 }

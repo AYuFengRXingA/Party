@@ -1,5 +1,7 @@
 package com.yufengandbabaozhou.party.UI;
 
+import com.yufengandbabaozhou.party.Party;
+import com.yufengandbabaozhou.party.Server.LeaveGroupPacket;
 import com.yufengandbabaozhou.party.group.GroupManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -42,9 +44,7 @@ public class SimpleScreen extends Screen{
         this.addRenderableWidget(button2);
 
         Button button3 = Button.builder(Component.literal("离开群组"), (btn) -> {
-            manager.leaveGroup(playerName);
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("你已经离开群组"));
-
+            Party.NETWORK.sendToServer(new LeaveGroupPacket());
 
         }).bounds(this.width/4*3-40, this.height/4-40, buttonWidth, buttonHeight).build();
         this.addRenderableWidget(button3);

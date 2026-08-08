@@ -1,5 +1,7 @@
 package com.yufengandbabaozhou.party.UI;
 
+import com.yufengandbabaozhou.party.Party;
+import com.yufengandbabaozhou.party.Server.CreateGroupPacket;
 import com.yufengandbabaozhou.party.group.Group;
 import com.yufengandbabaozhou.party.group.GroupManager;
 import net.minecraft.client.Minecraft;
@@ -39,17 +41,19 @@ GroupListWidget.Entry entry ;
         String ID = maxplayer.getValue();
 
         Button buttonSET = Button.builder(Component.literal("创建群组"), (btn) -> {
-            if(manager.isInGroup(playerName) ){
-                Minecraft.getInstance().player.sendSystemMessage(Component.literal("你已经加入群组"));
-                return;
-            } else if (ID == null) {
+            if(ID == null) {
                 Minecraft.getInstance().player.sendSystemMessage(Component.literal("输入ID"));
                 return;
+            } else if (manager.isInGroup(playerName)) {
+                Minecraft.getInstance().player.sendSystemMessage(Component.literal("你已经加入群组"));
+                return;
             }
-            Group group = manager.createGroup(playerName,ID);
+            Minecraft.getInstance().player.sendSystemMessage(Component.literal("测试"+ID));
+            Party.NETWORK.sendToServer(new CreateGroupPacket(ID));
+            /*Group group = manager.createGroup(playerName,ID);
             System.out.println("已创建群组："+ID);
             ListSet.groupListWidget.addEntry(ID+"的群组");
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("已创建群组："+ID));
+            Minecraft.getInstance().player.sendSystemMessage(Component.literal("已创建群组："+ID));*/
 
         }).bounds(this.width/4-40, this.height/4-40, buttonWidth, buttonHeight).build();
         this.addRenderableWidget(buttonSET);

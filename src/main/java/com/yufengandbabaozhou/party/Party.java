@@ -1,17 +1,12 @@
 package com.yufengandbabaozhou.party;
 
 import com.mojang.logging.LogUtils;
+import com.yufengandbabaozhou.party.Server.CreateGroupPacket;
+import com.yufengandbabaozhou.party.Server.JoinGroupPacket;
+import com.yufengandbabaozhou.party.Server.LeaveGroupPacket;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -24,9 +19,9 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -38,9 +33,38 @@ public class Party {
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    private static final String PROTOCOL_VERSION = "1.0";
+
+    public static final SimpleChannel NETWORK = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(MODID, "main"),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals
+    );
+
+
+
 
     public Party() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        int id = 0;
+        NETWORK.registerMessage(id++, CreateGroupPacket.class,
+                CreateGroupPacket::encode,
+                CreateGroupPacket::decode,
+                CreateGroupPacket::handle
+        );
+        NETWORK.registerMessage(id++, JoinGroupPacket.class,
+                JoinGroupPacket::encode,
+                JoinGroupPacket::decode,
+                JoinGroupPacket::handle
+        );
+        NETWORK.registerMessage(id++, LeaveGroupPacket.class,
+                LeaveGroupPacket::encode,
+                LeaveGroupPacket::decode,
+                LeaveGroupPacket::handle
+        );
+        System.out.println("✅ 群组网络包已注册");
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);

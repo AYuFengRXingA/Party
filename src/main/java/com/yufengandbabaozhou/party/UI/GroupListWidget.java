@@ -1,12 +1,15 @@
 package com.yufengandbabaozhou.party.UI;
 
+import com.yufengandbabaozhou.party.Party;
 import com.yufengandbabaozhou.party.PlayerTag;
+import com.yufengandbabaozhou.party.Server.JoinGroupPacket;
 import com.yufengandbabaozhou.party.group.GroupManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.network.chat.Component;
 
+import java.net.IDN;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +56,8 @@ public class GroupListWidget extends ObjectSelectionList<GroupListWidget.Entry> 
         @Override
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
             if (button == 0) {// 左键
-                GroupManager.getInstance();
 
+                Party.NETWORK.sendToServer(new JoinGroupPacket(text));
                 return true;
             }
             return false;
