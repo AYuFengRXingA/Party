@@ -44,7 +44,9 @@ public class SimpleScreen extends Screen{
         this.addRenderableWidget(button2);
 
         Button button3 = Button.builder(Component.literal("离开群组"), (btn) -> {
+            ListSet.groupListWidget.removeEntry(playerName);
             Party.NETWORK.sendToServer(new LeaveGroupPacket());
+
 
         }).bounds(this.width/4*3-40, this.height/4-40, buttonWidth, buttonHeight).build();
         this.addRenderableWidget(button3);

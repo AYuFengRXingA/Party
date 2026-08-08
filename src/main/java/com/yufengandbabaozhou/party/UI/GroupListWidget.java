@@ -26,6 +26,9 @@ public class GroupListWidget extends ObjectSelectionList<GroupListWidget.Entry> 
         this.addEntry(new Entry(text));
 
     }
+    public void removeEntry(String index) {
+        this.removeEntry(new Entry(index));
+    }
 
     public void clearAll() {
         this.clearEntries();
@@ -48,7 +51,6 @@ public class GroupListWidget extends ObjectSelectionList<GroupListWidget.Entry> 
 
         public Entry(String text) {
             this.text = text;
-
         }
 
 
@@ -59,6 +61,8 @@ public class GroupListWidget extends ObjectSelectionList<GroupListWidget.Entry> 
 
                 Party.NETWORK.sendToServer(new JoinGroupPacket(text));
                 return true;
+            }else if (button == 1) {
+
             }
             return false;
         }
