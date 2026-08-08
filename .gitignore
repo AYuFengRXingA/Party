@@ -1,4 +1,5 @@
-/build/
 /.idea/
 /.gradle/
-/run/
+/WereWolf/build/
+/PartiesLoader/build/
+/PartiesLoader/run/

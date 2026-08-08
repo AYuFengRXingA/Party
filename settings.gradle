@@ -13,3 +13,6 @@ plugins {
 }
 
 rootProject.name = 'Party'
+
+include 'PartiesLoader'
+include 'WereWolf'
