@@ -2,6 +2,7 @@ package com.yufengandbabaozhou.party;
 
 import com.mojang.logging.LogUtils;
 import com.yufengandbabaozhou.party.Server.CreateGroupPacket;
+import com.yufengandbabaozhou.party.Server.CreateGroupResponsePacket;
 import com.yufengandbabaozhou.party.Server.JoinGroupPacket;
 import com.yufengandbabaozhou.party.Server.LeaveGroupPacket;
 import net.minecraft.client.Minecraft;
@@ -64,7 +65,12 @@ public class Party {
                 LeaveGroupPacket::decode,
                 LeaveGroupPacket::handle
         );
-        System.out.println("✅ 群组网络包已注册");
+        NETWORK.registerMessage(id++, CreateGroupResponsePacket.class,
+                CreateGroupResponsePacket::encode,
+                CreateGroupResponsePacket::decode,
+                CreateGroupResponsePacket::handle
+        );
+        System.out.println("群组网络包已注册");
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);

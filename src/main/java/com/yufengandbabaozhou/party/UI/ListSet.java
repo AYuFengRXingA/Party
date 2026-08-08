@@ -1,10 +1,14 @@
 package com.yufengandbabaozhou.party.UI;
 
+import com.yufengandbabaozhou.party.group.Group;
+import com.yufengandbabaozhou.party.group.GroupManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+
+import java.util.List;
 
 public class ListSet extends Screen {
     public static GroupListWidget groupListWidget;
@@ -16,6 +20,11 @@ public class ListSet extends Screen {
         super.init();
 
         groupListWidget = new GroupListWidget(0,100,this.width,this.height);
+
+        List<Group> allGroups = GroupManager.getInstance().getAllGroups();
+        for (Group group : allGroups) {
+            groupListWidget.addEntry(group.getGroupName() + " (ID: " + group.getGroupId() + ")");
+        }
         this.addRenderableWidget(groupListWidget);
 
     }

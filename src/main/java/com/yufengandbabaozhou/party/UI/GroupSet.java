@@ -38,22 +38,20 @@ GroupListWidget.Entry entry ;
                 Component.literal("ID"));
         maxplayer.setHint(Component.literal("请输入群组ID"));
         this.addRenderableWidget(maxplayer);
-        String ID = maxplayer.getValue();
+
 
         Button buttonSET = Button.builder(Component.literal("创建群组"), (btn) -> {
-            if(ID == null) {
-                Minecraft.getInstance().player.sendSystemMessage(Component.literal("输入ID"));
+            String ID = maxplayer.getValue();
+            if(ID.isEmpty()) {
+                Minecraft.getInstance().player.sendSystemMessage(Component.literal("§c请输入ID"));
                 return;
             } else if (manager.isInGroup(playerName)) {
-                Minecraft.getInstance().player.sendSystemMessage(Component.literal("你已经加入群组"));
+                Minecraft.getInstance().player.sendSystemMessage(Component.literal("§a你已经加入群组"));
                 return;
             }
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("测试"+ID));
+
             Party.NETWORK.sendToServer(new CreateGroupPacket(ID));
-            /*Group group = manager.createGroup(playerName,ID);
-            System.out.println("已创建群组："+ID);
-            ListSet.groupListWidget.addEntry(ID+"的群组");
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("已创建群组："+ID));*/
+
 
         }).bounds(this.width/4-40, this.height/4-40, buttonWidth, buttonHeight).build();
         this.addRenderableWidget(buttonSET);

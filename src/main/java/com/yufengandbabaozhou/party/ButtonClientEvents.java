@@ -37,11 +37,5 @@ public class ButtonClientEvents {
             Minecraft.getInstance().setScreen(new SimpleScreen(Component.literal("占位")));
         }
     }
-   /*@SubscribeEvent
-    public static void onKeyInput(InputEvent.Key event) {
-        if (event.getKey() == 86 && event.getAction() == 1) {
-            System.out.println("P以触发");
-            Minecraft.getInstance().setScreen(new SimpleScreen(Component.literal("UI")));
-        }
-    }*/
+
 }

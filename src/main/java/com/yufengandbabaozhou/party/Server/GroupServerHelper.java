@@ -1,40 +1,56 @@
 package com.yufengandbabaozhou.party.Server;
+
+import com.yufengandbabaozhou.party.Party;
 import com.yufengandbabaozhou.party.PlayerTag;
-import com.yufengandbabaozhou.party.UI.ListSet;
 import com.yufengandbabaozhou.party.group.Group;
 import com.yufengandbabaozhou.party.group.GroupManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.network.NetworkDirection;
 
 import java.util.List;
 
 public class GroupServerHelper {
-    public  static boolean CreateGroup(ServerPlayer player,String groupId) {
+
+
+    public static boolean CreateGroup(ServerPlayer player, String groupId) {
         String playerName = player.getName().getString();
 
-       if(GroupManager.getInstance().isInGroup(playerName)){
-           player.sendSystemMessage(Component.literal("§c你已在群组中，不能创建！"));
-           return false;
-       }
-       if(GroupManager.getInstance().isGroupIdUsed(groupId)){
-           player.sendSystemMessage(Component.literal("§c该群组ID已被占用！"));
-           return false;
-       }
-       Group group = GroupManager.getInstance().createGroup(playerName,groupId);
+        if (GroupManager.getInstance().isInGroup(playerName)) {
+            sendResponse(player, false, "你已在群组中，不能创建！", groupId, "");
+            return false;
+        }
+        if (GroupManager.getInstance().isGroupIdUsed(groupId)) {
+            sendResponse(player, false, "该群组ID已被占用！", groupId, "");
+            return false;
+        }
 
-       if(group == null){
-           player.sendSystemMessage(Component.literal("§c创建群组失败！"));
-           return false;
-       }
-        PlayerTag.setGroup(player,groupId,group.getGroupName());
+        Group group = GroupManager.getInstance().createGroup(playerName, groupId);
+        if (group == null) {
+            sendResponse(player, false, "创建群组失败！", groupId, "");
+            return false;
+        }
 
-        player.sendSystemMessage(Component.literal(
-                "§a已创建群组：" + group.getGroupName() + " (ID: " + groupId + ")"
-        ));
+        PlayerTag.setGroup(player, groupId, group.getGroupName());
+
+
+        sendResponse(player, true, "已创建群组：" + group.getGroupName(), groupId, group.getGroupName());
+
         return true;
-    }//创建群组
+    }
 
-    public static boolean joinGroup(ServerPlayer player,String groupId) {
+
+    private static void sendResponse(ServerPlayer player, boolean success, String message, String groupId, String groupName) {
+        Party.NETWORK.sendTo(
+                new CreateGroupResponsePacket(success, message, groupId, groupName),
+                player.connection.connection,
+                NetworkDirection.PLAY_TO_CLIENT
+        );
+        System.out.println(" 发送响应包: success=" + success + ", groupId=" + groupId);
+    }
+
+
+    public static boolean joinGroup(ServerPlayer player, String groupId) {
         String playerName = player.getName().getString();
 
         if (GroupManager.getInstance().isInGroup(playerName)) {
@@ -52,14 +68,13 @@ public class GroupServerHelper {
         if (!success) {
             player.sendSystemMessage(Component.literal("§c加入群组失败！"));
             return false;
-    }
-        PlayerTag.setGroup(player, groupId, group.getGroupName());
+        }
 
-        player.sendSystemMessage(Component.literal(
-                "§a 已加入群组：" + group.getGroupName()
-        ));
+        PlayerTag.setGroup(player, groupId, group.getGroupName());
+        player.sendSystemMessage(Component.literal("§a 已加入群组：" + group.getGroupName()));
         return true;
     }
+
 
     public static boolean leaveGroup(ServerPlayer player) {
         String playerName = player.getName().getString();
@@ -77,12 +92,11 @@ public class GroupServerHelper {
         }
 
         PlayerTag.removeGroup(player);
-
-        player.sendSystemMessage(Component.literal(
-                "§a已离开群组：" + group.getGroupName()
-        ));
+        player.sendSystemMessage(Component.literal("§a已离开群组：" + group.getGroupName()));
         return true;
     }
+
+
     public static Group getPlayerGroup(ServerPlayer player) {
         return GroupManager.getInstance().getPlayerGroup(player.getName().getString());
     }
@@ -106,5 +120,4 @@ public class GroupServerHelper {
     public static boolean isGroupIdUsed(String groupId) {
         return GroupManager.getInstance().isGroupIdUsed(groupId);
     }
-//查询
 }
