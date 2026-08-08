@@ -5,6 +5,8 @@ import com.yufengandbabaozhou.party.Server.CreateGroupPacket;
 import com.yufengandbabaozhou.party.Server.CreateGroupResponsePacket;
 import com.yufengandbabaozhou.party.Server.JoinGroupPacket;
 import com.yufengandbabaozhou.party.Server.LeaveGroupPacket;
+import com.yufengandbabaozhou.party.games.IGame;
+import com.yufengandbabaozhou.party.games.IGameConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -25,6 +27,8 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
+import java.util.HashMap;
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Party.MODID)
 public class Party {
@@ -35,9 +39,11 @@ public class Party {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final String PROTOCOL_VERSION = "1.0";
+    //使用字典来存放游戏配置，一个小游戏对象可以使用多张地图和多项配置游玩，每个小游戏对象配置都有游戏起始点，终止点等信息。
+    public static HashMap<IGame, IGameConfig> Games=new HashMap<>();
 
     public static final SimpleChannel NETWORK = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(MODID, "main"),
+            ResourceLocation.fromNamespaceAndPath(MODID, "main"),
             () -> PROTOCOL_VERSION,
             PROTOCOL_VERSION::equals,
             PROTOCOL_VERSION::equals
@@ -89,14 +95,14 @@ public class Party {
     private void commonSetup(final FMLCommonSetupEvent event) {
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
-        LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
+        /*LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
 
         if (Config.logDirtBlock)
             LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
 
         LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
 
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));*/
     }
 
     // Add the example block item to the building blocks tab
