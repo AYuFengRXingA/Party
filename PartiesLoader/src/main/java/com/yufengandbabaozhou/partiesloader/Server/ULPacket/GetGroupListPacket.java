@@ -2,8 +2,8 @@ package com.yufengandbabaozhou.partiesloader.Server.ULPacket;
 
 import com.yufengandbabaozhou.partiesloader.PartiesLoader;
 import com.yufengandbabaozhou.partiesloader.Server.DLPacket.GroupListResponsePacket;
-import com.yufengandbabaozhou.partiesloader.group.Group;
-import com.yufengandbabaozhou.partiesloader.group.GroupManager;
+import com.yufengandbabaozhou.partiesloader.Group.Group;
+import com.yufengandbabaozhou.partiesloader.Group.GroupManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;

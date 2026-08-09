@@ -1,7 +1,7 @@
 package com.yufengandbabaozhou.partiesloader.UI;
 
-import com.yufengandbabaozhou.partiesloader.group.Group;
-import com.yufengandbabaozhou.partiesloader.group.GroupManager;
+import com.yufengandbabaozhou.partiesloader.Group.Group;
+import com.yufengandbabaozhou.partiesloader.Group.GroupManager;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;

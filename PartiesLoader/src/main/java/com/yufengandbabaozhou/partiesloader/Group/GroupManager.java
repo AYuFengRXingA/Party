@@ -1,4 +1,4 @@
-package com.yufengandbabaozhou.partiesloader.group;
+package com.yufengandbabaozhou.partiesloader.Group;
 
 import java.util.*;
 

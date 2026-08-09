@@ -2,7 +2,7 @@ package com.yufengandbabaozhou.partiesloader.UI;
 
 import com.yufengandbabaozhou.partiesloader.PartiesLoader;
 import com.yufengandbabaozhou.partiesloader.Server.ULPacket.CreateGroupPacket;
-import com.yufengandbabaozhou.partiesloader.group.GroupManager;
+import com.yufengandbabaozhou.partiesloader.Group.GroupManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;

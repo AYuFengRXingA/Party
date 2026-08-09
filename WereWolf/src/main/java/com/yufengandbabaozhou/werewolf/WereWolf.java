@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import com.yufengandbabaozhou.partiesloader.PartiesLoader;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
-import com.yufengandbabaozhou.partiesloader.gameinterfaces.IGame;
 
 @Mod(WereWolf.MODID)
 public class WereWolf{

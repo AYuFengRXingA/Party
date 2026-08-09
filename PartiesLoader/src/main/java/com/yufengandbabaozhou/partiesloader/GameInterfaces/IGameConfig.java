@@ -1,6 +1,4 @@
-package com.yufengandbabaozhou.partiesloader.gameinterfaces;
-
-import javax.swing.text.html.parser.Entity;
+package com.yufengandbabaozhou.partiesloader.GameInterfaces;
 
 public interface IGameConfig {
      double getStartXPos();

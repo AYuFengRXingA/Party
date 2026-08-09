@@ -1,6 +1,9 @@
 package com.yufengandbabaozhou.werewolf;
 
-import com.yufengandbabaozhou.partiesloader.gameinterfaces.IGameConfig;
+import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGameConfig;
+import jdk.jfr.Timespan;
+
+import java.time.Duration;
 
 public class GameConfig implements IGameConfig {
     public double StartXPos;
@@ -24,5 +27,12 @@ public class GameConfig implements IGameConfig {
     @Override
     public double getStartZPos() {
         return StartZPos;
+    }
+
+    public Duration getDayLastTime(){
+        return Duration.ofSeconds(180);
+    }
+    public Duration getNightLastTime(){
+        return Duration.ofSeconds(180);
     }
 }

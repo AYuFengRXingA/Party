@@ -1,8 +1,8 @@
 package com.yufengandbabaozhou.werewolf;
 
-import com.yufengandbabaozhou.partiesloader.gameinterfaces.IGame;
-import com.yufengandbabaozhou.partiesloader.gameinterfaces.IGameConfig;
-import com.yufengandbabaozhou.partiesloader.gameinterfaces.IGameCreator;
+import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGame;
+import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGameConfig;
+import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGameCreator;
 
 public class GameCreator implements IGameCreator {
     @Override

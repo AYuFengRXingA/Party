@@ -1,7 +1,7 @@
 package com.yufengandbabaozhou.partiesloader.Server.DLPacket;
 
 import com.yufengandbabaozhou.partiesloader.UI.ListSet;
-import com.yufengandbabaozhou.partiesloader.group.Group;
+import com.yufengandbabaozhou.partiesloader.Group.Group;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 

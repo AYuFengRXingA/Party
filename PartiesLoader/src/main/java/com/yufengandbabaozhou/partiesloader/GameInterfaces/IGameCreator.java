@@ -1,4 +1,4 @@
-package com.yufengandbabaozhou.partiesloader.gameinterfaces;
+package com.yufengandbabaozhou.partiesloader.GameInterfaces;
 
 public interface IGameCreator {
     String getGameName();

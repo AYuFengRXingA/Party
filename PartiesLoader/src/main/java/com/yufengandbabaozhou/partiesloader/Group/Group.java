@@ -1,4 +1,4 @@
-package com.yufengandbabaozhou.partiesloader.group;
+package com.yufengandbabaozhou.partiesloader.Group;
 
 import com.yufengandbabaozhou.partiesloader.UI.ListSet;
 

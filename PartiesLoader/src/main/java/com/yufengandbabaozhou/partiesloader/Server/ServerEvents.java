@@ -1,6 +1,6 @@
 package com.yufengandbabaozhou.partiesloader.Server;
 
-import com.yufengandbabaozhou.partiesloader.group.GroupManager;
+import com.yufengandbabaozhou.partiesloader.Group.GroupManager;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

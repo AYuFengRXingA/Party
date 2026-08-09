@@ -8,8 +8,8 @@ import com.yufengandbabaozhou.partiesloader.Server.DLPacket.CreateGroupResponseP
 import com.yufengandbabaozhou.partiesloader.Server.ULPacket.GetGroupListPacket;
 import com.yufengandbabaozhou.partiesloader.Server.ULPacket.JoinGroupPacket;
 import com.yufengandbabaozhou.partiesloader.Server.ULPacket.LeaveGroupPacket;
-import com.yufengandbabaozhou.partiesloader.gameinterfaces.IGameConfig;
-import com.yufengandbabaozhou.partiesloader.gameinterfaces.IGameCreator;
+import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGameConfig;
+import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGameCreator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
