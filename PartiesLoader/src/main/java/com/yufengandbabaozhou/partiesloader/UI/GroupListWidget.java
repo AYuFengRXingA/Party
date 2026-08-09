@@ -1,7 +1,7 @@
 package com.yufengandbabaozhou.partiesloader.UI;
 
 import com.yufengandbabaozhou.partiesloader.PartiesLoader;
-import com.yufengandbabaozhou.partiesloader.Server.JoinGroupPacket;
+import com.yufengandbabaozhou.partiesloader.Server.ULPacket.JoinGroupPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;

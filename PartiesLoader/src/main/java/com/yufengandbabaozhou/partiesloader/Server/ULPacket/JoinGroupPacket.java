@@ -1,4 +1,5 @@
-package com.yufengandbabaozhou.partiesloader.Server;;
+package com.yufengandbabaozhou.partiesloader.Server.ULPacket;;
+import com.yufengandbabaozhou.partiesloader.Server.GroupServerHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;

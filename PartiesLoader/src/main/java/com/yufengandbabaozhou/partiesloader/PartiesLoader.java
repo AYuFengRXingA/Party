@@ -1,10 +1,13 @@
 package com.yufengandbabaozhou.partiesloader;
 
 import com.mojang.logging.LogUtils;
-import com.yufengandbabaozhou.partiesloader.Server.CreateGroupPacket;
-import com.yufengandbabaozhou.partiesloader.Server.CreateGroupResponsePacket;
-import com.yufengandbabaozhou.partiesloader.Server.JoinGroupPacket;
-import com.yufengandbabaozhou.partiesloader.Server.LeaveGroupPacket;
+import com.yufengandbabaozhou.partiesloader.Server.DLPacket.GroupListResponsePacket;
+import com.yufengandbabaozhou.partiesloader.Server.DLPacket.RefreshListPacket;
+import com.yufengandbabaozhou.partiesloader.Server.ULPacket.CreateGroupPacket;
+import com.yufengandbabaozhou.partiesloader.Server.DLPacket.CreateGroupResponsePacket;
+import com.yufengandbabaozhou.partiesloader.Server.ULPacket.GetGroupListPacket;
+import com.yufengandbabaozhou.partiesloader.Server.ULPacket.JoinGroupPacket;
+import com.yufengandbabaozhou.partiesloader.Server.ULPacket.LeaveGroupPacket;
 import com.yufengandbabaozhou.partiesloader.gameinterfaces.IGameConfig;
 import com.yufengandbabaozhou.partiesloader.gameinterfaces.IGameCreator;
 import net.minecraft.client.Minecraft;
@@ -75,6 +78,22 @@ public class PartiesLoader {
                 CreateGroupResponsePacket::decode,
                 CreateGroupResponsePacket::handle
         );
+        NETWORK.registerMessage(id++, RefreshListPacket.class,
+                RefreshListPacket::encode,
+                RefreshListPacket::decode,
+                RefreshListPacket::handle
+        );
+        NETWORK.registerMessage(id++, GetGroupListPacket.class,
+                GetGroupListPacket::encode,
+                GetGroupListPacket::decode,
+                GetGroupListPacket::handle
+        );
+        NETWORK.registerMessage(id++, GroupListResponsePacket.class,
+                GroupListResponsePacket::encode,
+                GroupListResponsePacket::decode,
+                GroupListResponsePacket::handle
+        );
+
         System.out.println("群组网络包已注册");
 
         // Register the commonSetup method for modloading

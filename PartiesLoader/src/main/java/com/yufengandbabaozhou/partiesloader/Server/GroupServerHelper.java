@@ -2,6 +2,8 @@ package com.yufengandbabaozhou.partiesloader.Server;
 
 import com.yufengandbabaozhou.partiesloader.PartiesLoader;
 import com.yufengandbabaozhou.partiesloader.PlayerTag;
+import com.yufengandbabaozhou.partiesloader.Server.DLPacket.CreateGroupResponsePacket;
+import com.yufengandbabaozhou.partiesloader.Server.DLPacket.RefreshListPacket;
 import com.yufengandbabaozhou.partiesloader.group.Group;
 import com.yufengandbabaozhou.partiesloader.group.GroupManager;
 import net.minecraft.network.chat.Component;
@@ -9,6 +11,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
 
 import java.util.List;
+
+import static com.yufengandbabaozhou.partiesloader.PartiesLoader.NETWORK;
 
 public class GroupServerHelper {
 
@@ -41,7 +45,7 @@ public class GroupServerHelper {
 
 
     private static void sendResponse(ServerPlayer player, boolean success, String message, String groupId, String groupName) {
-        PartiesLoader.NETWORK.sendTo(
+        NETWORK.sendTo(
                 new CreateGroupResponsePacket(success, message, groupId, groupName),
                 player.connection.connection,
                 NetworkDirection.PLAY_TO_CLIENT
@@ -90,10 +94,31 @@ public class GroupServerHelper {
             player.sendSystemMessage(Component.literal("§c离开群组失败！"));
             return false;
         }
-
         PlayerTag.removeGroup(player);
-        player.sendSystemMessage(Component.literal("§a已离开群组：" + group.getGroupName()));
+
+
+
+        Group updatedGroup = GroupManager.getInstance().getGroup(group.getGroupId());
+
+
+        if (updatedGroup == null || updatedGroup.getMemberCount() == 0) {
+            GroupManager.getInstance().removeGroup(playerName);
+            System.out.println("群组已为空，自动删除: " + playerName);
+        }
+
+        // ===== 通知客户端刷新列表 =====
+        sendRefreshResponse(player);
+
         return true;
+    }
+
+    // ===== 发送刷新通知 =====
+    private static void sendRefreshResponse(ServerPlayer player) {
+        PartiesLoader.NETWORK.sendTo(
+                new RefreshListPacket(),
+                player.connection.connection,
+                NetworkDirection.PLAY_TO_CLIENT
+        );
     }
 
 

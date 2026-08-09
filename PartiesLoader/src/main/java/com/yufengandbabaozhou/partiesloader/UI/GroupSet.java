@@ -1,7 +1,7 @@
 package com.yufengandbabaozhou.partiesloader.UI;
 
 import com.yufengandbabaozhou.partiesloader.PartiesLoader;
-import com.yufengandbabaozhou.partiesloader.Server.CreateGroupPacket;
+import com.yufengandbabaozhou.partiesloader.Server.ULPacket.CreateGroupPacket;
 import com.yufengandbabaozhou.partiesloader.group.GroupManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -48,7 +48,7 @@ GroupListWidget.Entry entry ;
                 return;
             }
 
-            PartiesLoader.NETWORK.sendToServer(new CreateGroupPacket(ID));
+            PartiesLoader.NETWORK.sendToServer(new CreateGroupPacket(playerName));
 
 
         }).bounds(this.width/4-40, this.height/4-40, buttonWidth, buttonHeight).build();

@@ -53,6 +53,19 @@ public class GroupManager {
         }
         return false;
     }
+
+
+    public boolean removeGroup(String playerName) {
+        Group group = groups.remove(playerName);
+        if (group == null) return false;
+
+        // 移除所有成员的映射
+        for (String member : group.getMembers()) {
+            playerGroupMap.remove(member);
+        }
+        System.out.println("已删除群组: " + group.getGroupName());
+        return true;
+    }
     //查询
 
     public Group getPlayerGroup(String playerName) {

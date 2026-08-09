@@ -1,4 +1,4 @@
-package com.yufengandbabaozhou.partiesloader.Server;
+package com.yufengandbabaozhou.partiesloader.Server.DLPacket;
 
 import com.yufengandbabaozhou.partiesloader.UI.ListSet;
 import net.minecraft.client.Minecraft;

@@ -1,7 +1,7 @@
 package com.yufengandbabaozhou.partiesloader.UI;
 
 import com.yufengandbabaozhou.partiesloader.PartiesLoader;
-import com.yufengandbabaozhou.partiesloader.Server.LeaveGroupPacket;
+import com.yufengandbabaozhou.partiesloader.Server.ULPacket.LeaveGroupPacket;
 import com.yufengandbabaozhou.partiesloader.group.GroupManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
