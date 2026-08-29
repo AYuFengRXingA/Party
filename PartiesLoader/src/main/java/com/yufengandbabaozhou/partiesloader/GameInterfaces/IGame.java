@@ -5,4 +5,8 @@ public interface IGame {
      String Description();//应支持富文本，但我不会搞
      String Rule();
      IGamePhase[] getGamePhases();
+     IGamePhase getFirstGamePhase();
+     IGamePhase getCurrentGamePhase();
+     void EnterNextGamePhase(int gamePhaseID);
+     void EndGame();
 }
