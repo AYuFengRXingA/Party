@@ -23,9 +23,12 @@ public class ButtonClientEvents {
 
     );
 
+
+
     @SubscribeEvent
     public static void registerBindings(RegisterKeyMappingsEvent event){
         event.register(OPEN_UI_KEY);//按键注册
+
 
     }
 
@@ -36,6 +39,7 @@ public class ButtonClientEvents {
             Minecraft.getInstance().setScreen(new ListSet(Component.literal("列表")));
             Minecraft.getInstance().setScreen(new SimpleScreen(Component.literal("占位")));
         }
+
     }
 
 }

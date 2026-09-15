@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 public class GroupListResponsePacket {
     private final List<GroupData> groups;
 
-    // ===== 构造方法1：从 Group 列表 =====
+
     public GroupListResponsePacket(List<Group> groups) {
         this.groups = new ArrayList<>();
         for (Group g : groups) {
@@ -20,7 +20,7 @@ public class GroupListResponsePacket {
         }
     }
 
-    // ===== 构造方法2：直接从 GroupData 列表 =====
+
     public GroupListResponsePacket(List<GroupData> groups, boolean dummy) {
         this.groups = groups;
     }

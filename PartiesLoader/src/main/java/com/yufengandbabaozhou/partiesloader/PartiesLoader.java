@@ -11,24 +11,27 @@ import com.yufengandbabaozhou.partiesloader.Server.ULPacket.LeaveGroupPacket;
 import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGameConfig;
 import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGameCreator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(PartiesLoader.MODID)
@@ -43,71 +46,92 @@ public class PartiesLoader {
     //使用字典来存放游戏配置，一个小游戏对象可以使用多张地图和多项配置游玩，每个小游戏对象配置都有游戏起始点，终止点等信息。
     public static HashMap<IGameCreator, IGameConfig[]> Games=new HashMap<>();
 
+
+
     public static final SimpleChannel NETWORK = NetworkRegistry.newSimpleChannel(
-            ResourceLocation.fromNamespaceAndPath(MODID, "main"),
+            new ResourceLocation(MODID, "main"),
             () -> PROTOCOL_VERSION,
             PROTOCOL_VERSION::equals,
             PROTOCOL_VERSION::equals
     );
+    public static List<IGameCreator> getAllGames() {
+        return new ArrayList<>(Games.keySet());}
+    // PartiesLoader.java
 
+    //注册方法
+    private static int nextPacketId = 0;
 
+    public static <T> void registerPacket(
+            Class<T> packetClass,
+            BiConsumer<T, FriendlyByteBuf> encoder,
+            Function<FriendlyByteBuf, T> decoder,
+            BiConsumer<T, Supplier<NetworkEvent.Context>> handler
+    ) {
+        NETWORK.registerMessage(nextPacketId++, packetClass, encoder, decoder, handler);
+    }
 
 
     public PartiesLoader() {
-        INSTANCE=this;
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        INSTANCE = this;
 
-        int id = 0;
-        NETWORK.registerMessage(id++, CreateGroupPacket.class,
+
+        registerPacket(
+                CreateGroupPacket.class,
                 CreateGroupPacket::encode,
                 CreateGroupPacket::decode,
-                CreateGroupPacket::handle
-        );
-        NETWORK.registerMessage(id++, JoinGroupPacket.class,
+                CreateGroupPacket::handle);
+
+        registerPacket(
+                JoinGroupPacket.class,
                 JoinGroupPacket::encode,
                 JoinGroupPacket::decode,
-                JoinGroupPacket::handle
-        );
-        NETWORK.registerMessage(id++, LeaveGroupPacket.class,
+                JoinGroupPacket::handle);
+
+        registerPacket(
+                LeaveGroupPacket.class,
                 LeaveGroupPacket::encode,
                 LeaveGroupPacket::decode,
-                LeaveGroupPacket::handle
-        );
-        NETWORK.registerMessage(id++, CreateGroupResponsePacket.class,
+                LeaveGroupPacket::handle);
+
+        registerPacket(
+                CreateGroupResponsePacket.class,
                 CreateGroupResponsePacket::encode,
                 CreateGroupResponsePacket::decode,
-                CreateGroupResponsePacket::handle
-        );
-        NETWORK.registerMessage(id++, RefreshListPacket.class,
+                CreateGroupResponsePacket::handle);
+
+        registerPacket(
+                RefreshListPacket.class,
                 RefreshListPacket::encode,
                 RefreshListPacket::decode,
-                RefreshListPacket::handle
-        );
-        NETWORK.registerMessage(id++, GetGroupListPacket.class,
+                RefreshListPacket::handle);
+
+        registerPacket(
+                GetGroupListPacket.class,
                 GetGroupListPacket::encode,
                 GetGroupListPacket::decode,
-                GetGroupListPacket::handle
-        );
-        NETWORK.registerMessage(id++, GroupListResponsePacket.class,
+                GetGroupListPacket::handle);
+
+        registerPacket(
+                GroupListResponsePacket.class,
                 GroupListResponsePacket::encode,
                 GroupListResponsePacket::decode,
-                GroupListResponsePacket::handle
-        );
+                GroupListResponsePacket::handle);
 
         System.out.println("群组网络包已注册");
 
         // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
+        //modEventBus.addListener(this::commonSetup);
 
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
         // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
+        //modEventBus.addListener(this::addCreative);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        //ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
     }
 
     public static void registerGame(IGameCreator creator, IGameConfig[] configs){

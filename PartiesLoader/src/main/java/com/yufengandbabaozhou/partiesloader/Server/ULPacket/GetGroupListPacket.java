@@ -38,7 +38,7 @@ public class GetGroupListPacket {
                     player.connection.connection,
                     NetworkDirection.PLAY_TO_CLIENT
             );
-            System.out.println("📤 发送群组列表，共 " + groups.size() + " 个群组");
+            System.out.println(" 发送群组列表，共 " + groups.size() + " 个群组");
         });
         ctx.get().setPacketHandled(true);
     }

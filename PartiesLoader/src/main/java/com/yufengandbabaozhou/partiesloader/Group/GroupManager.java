@@ -93,6 +93,11 @@ public class GroupManager {
     public boolean isGroupIdUsed(String groupId) {
         return groups.containsKey(groupId);
     }
+    public String getPlayerGroupId(String playerName) {
+        Group group = groups.get(playerName);
+        if (group == null) return null;
+        return group.getGroupId();
+    }
 
     public void clearAll() {
         groups.clear();

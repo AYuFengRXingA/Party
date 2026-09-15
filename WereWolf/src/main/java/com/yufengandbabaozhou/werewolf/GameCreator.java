@@ -3,6 +3,7 @@ package com.yufengandbabaozhou.werewolf;
 import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGame;
 import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGameConfig;
 import com.yufengandbabaozhou.partiesloader.GameInterfaces.IGameCreator;
+import net.minecraft.client.gui.screens.Screen;
 
 public class GameCreator implements IGameCreator {
     @Override
@@ -16,7 +17,11 @@ public class GameCreator implements IGameCreator {
             GameConfig verifiedConfig=(GameConfig)config;
             return new Game(verifiedConfig);
         }
-        //log
+
         return null;
+    }
+    @Override
+    public Screen createUIScreen() {
+        return new UIConfig();
     }
 }
